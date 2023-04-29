@@ -27,7 +27,7 @@ from lobby import Lobby
 # }
 # JOINED {lobby}
 # EXITED {lobby}
-#
+# lobby add bot easy
 
 # game start
 # game info
@@ -170,17 +170,15 @@ class App:
                     elif req[1] == 'play':
                         if not req[2]:
                             err()
-
                         elif lobby.status == 1 and user.id == lobby.users[lobby.game.turn].id:
-                            res = lobby.game.play(req[2])
-                            if lobby.game.winner in [0, 1, 2]:
+                            r = lobby.game.play(req[2])
+                            if r != 0:
+                                err()
+                            elif lobby.game.winner in [0, 1, 2]:
                                 lobby.status = 2
                                 lobby.broadcast(f"END {lobby.json()}")
-                            elif res == 1:
-                                lobby.broadcast(f"MOVE {lobby.json()}")
                             else:
-                                err()
-
+                                lobby.broadcast(f"MOVE {lobby.json()}")
                         else:
                             err()
 

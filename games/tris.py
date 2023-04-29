@@ -5,13 +5,13 @@ class Tris:
         self.winner = None
         self.grid = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]]
 
-    def play(self, pos: str) -> int:  # returns 0 if wrong, 1 if ok
+    def play(self, pos: str) -> int:  # returns -1 if wrong, 0 if ok
         # position is "r c"
         r = int(pos[0])
         c = int(pos[1])
 
         if self.grid[r][c] != -1:
-            return 0
+            return -1
 
         self.grid[r][c] = self.turn
 
@@ -21,7 +21,7 @@ class Tris:
         else:
             self.turn = (self.turn + 1) % 2
 
-        return 1
+        return 0
 
     def check_winner(self) -> int:  # returns -1 if no winner, 2 if full, otherwise winner [1,2]
         full_flag = True
@@ -73,6 +73,9 @@ class Tris:
 
         return 2 if full_flag else -1
 
+    def bot(self, difficulty):
+        pass
+
     def reset(self):
         self.turn = (self.turn + 1) % 2
         self.winner = None
@@ -84,3 +87,6 @@ class Tris:
             winner: {self.winner},
             grid: {self.grid}
         """
+
+class TrisBot:
+    pass

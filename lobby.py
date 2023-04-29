@@ -13,6 +13,7 @@ class Lobby:
         self.id: str = random.randint(0, 999999)
         self.status = 0
         self.users: User = [user]
+        self.admin
 
         if game_name == 'tris':
             self.game = Tris()
