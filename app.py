@@ -89,18 +89,24 @@ class App:
 
             req = req.decode('utf-8').split()
 
+            # USER
+            # user <name>
+            if req[0] == 'user':
+                if not req[1]:
+                    err()
+                else:
+                    user = User(req[1], conn)
+
             # CREATE LOBBY
-            # create <game> <userid>
-            if req[0] == 'create':
-                if not (req[1] and req[2]):
+            # create <game>
+            elif req[0] == 'create':
+                if not req[1] or not user:
                     err()
                 else:
                     game_name = req[1]
-                    user_id = req[2]
 
                     if game_name in Lobby.available_games:
                         # create lobby
-                        user = User(user_id, conn)
                         lobby = Lobby(user, game_name)
                         self.active_lobbies.append(lobby)
 
@@ -113,13 +119,10 @@ class App:
             # JOIN LOBBY
             # join <lobby_id> <user_id>
             elif req[0] == 'join':
-                if not (req[1] and req[2]):
+                if not req[1] or not user:
                     err()
                 else:
                     lobby_id = int(req[1])
-                    user_id = req[2]
-
-                    user = User(user_id, conn)
                     lobby = self.get_lobby(lobby_id)
                     if not lobby:
                         conn.send("NULL".encode('utf-8'))

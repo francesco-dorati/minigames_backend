@@ -1,10 +1,14 @@
+import random
+
+
 class User:
-    def __init__(self, id: int, conn):
+    def __init__(self, name: str, conn):
         # get data from id
-        self.id: int = id
+        self.id: int = random.randint(0, 999999)
+        self.name = name
         self.connection = conn
         self.color = None
 
     def json(self):
-        return f"""id: {self.id}"""
+        return f"""|{self.id} - {self.name}|"""
 
